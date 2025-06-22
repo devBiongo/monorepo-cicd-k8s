@@ -1,0 +1,37 @@
+{
+  "name": "@sb-ppf/ui",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
+    },
+    "./Button": {
+      "import": "./dist/Button/index.mjs",
+      "types": "./dist/Button/index.d.mts"
+    },
+    "./TextField": {
+      "import": "./dist/TextField/index.mjs",
+      "types": "./dist/TextField/index.d.mts"
+    }
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup"
+  },
+  "devDependencies": {
+    "tsup": "8.4.0",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2"
+  }
+}

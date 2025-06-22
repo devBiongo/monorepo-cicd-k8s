@@ -1,0 +1,24 @@
+detect:
+  stage: prepare
+  image: alpine:latest
+  script:
+    - apk add --no-cache git bash
+    - |
+      echo "Detecting changed services..."
+      git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA > changed_files.txt
+      echo "Changed files:"
+      cat changed_files.txt || true
+
+      grep '^apps/' changed_files.txt | cut -d/ -f2 | sort | uniq > changed_services.txt || true
+
+      echo "Detected services:"
+      cat changed_services.txt || true
+
+      # 如果没匹配到任何 apps 下变更，则正常终止
+      if [ ! -s changed_services.txt ]; then
+        echo "✅ No apps changed. Skipping pipeline steps for services."
+        exit 0
+      fi
+  artifacts:
+    paths:
+      - changed_services.txt

@@ -1,0 +1,17 @@
+build_push:
+  stage: publish
+  needs:
+    - detect
+    - unit
+  before_script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+  script:
+    - echo "Building services with Docker..."
+    - |
+      while read svc; do
+        echo "Building $svc..."
+        docker build -f apps/$svc/Dockerfile -t $DOCKER_REGISTRY/$DOCKER_USER/$svc:$CI_COMMIT_SHORT_SHA .
+        docker push $DOCKER_REGISTRY/$DOCKER_USER/$svc:$CI_COMMIT_SHORT_SHA
+      done < changed_services.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^release\/.*$/'

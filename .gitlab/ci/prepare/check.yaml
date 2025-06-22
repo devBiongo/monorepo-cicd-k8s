@@ -1,0 +1,22 @@
+lint:
+  stage: prepare
+  image: $NODE_IMAGE
+  needs:
+    - install
+  script:
+    - pnpm check:lint
+  # rules:
+  #   - changes:
+  #       - '**/*.js'
+  #       - '**/*.ts'
+  #       - '**/*.jsx'
+  #       - '**/*.tsx'
+  #       - '**/*.json'
+
+type:
+  stage: prepare
+  image: $NODE_IMAGE
+  needs:
+    - install
+  script:
+    - pnpm check:type

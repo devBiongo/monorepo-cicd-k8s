@@ -1,0 +1,3 @@
+echo -e "\e[1;34m📢 Verifying your code... Just a moment.\e[0m"
+
+npx lint-staged --config lint-staged.config.js

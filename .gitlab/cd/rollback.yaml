@@ -1,0 +1,11 @@
+rollback:
+  stage: rollback
+  image: bitnami/kubectl:latest
+  script:
+    - echo "Setting up kubeconfig..."
+    - echo "$KUBE_CONFIG" | base64 -d > kubeconfig.yaml
+    - export KUBECONFIG=$PWD/kubeconfig.yaml
+    - echo "Rolling back deployment..."
+    - kubectl rollout undo deployment/hello
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'

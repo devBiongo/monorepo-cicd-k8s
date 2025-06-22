@@ -1,0 +1,38 @@
+{
+  "name": "sb-ppf",
+  "version": "1.0.0",
+  "description": "2025",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm -r --parallel --filter='./packages/*' run dev",
+    "build:packages": "pnpm -r -F='./packages/*' run build",
+    "build:cms": "pnpm -F=cms build",
+    "build:ppf": "pnpm -F=ppf build",
+    "check:lint": "eslint --cache .",
+    "check:type": "echo type check...",
+    "prepare": "husky",
+    "format": "prettier --write --cache .",
+    "test": "echo unit test ..."
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@eslint/js": "^9.21.0",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.5.3",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vitest": "^3.1.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.7.1"
+}

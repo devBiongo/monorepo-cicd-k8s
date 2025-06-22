@@ -1,0 +1,9 @@
+unit:
+  stage: test
+  image: $NODE_IMAGE
+  needs:
+    - install
+    - lint
+    - type
+  script:
+    - pnpm test

@@ -1,0 +1,22 @@
+deploy:
+  stage: deploy
+  image: quay.io/openshift/origin-cli:latest
+  needs:
+    - detect
+    - build_push
+  before_script:
+    - oc login --token=$OPENSHIFT_TOKEN --server=$OPENSHIFT_API --insecure-skip-tls-verify=true
+    - yum install -y gettext
+  script:
+    - |
+      while read svc; do
+        echo "Deploying $svc..."
+        oc apply -f infra/k8s/$svc/deployment.yaml
+        oc apply -f infra/k8s/$svc/service.yaml
+        if [ -f infra/k8s/$svc/hpa.yaml ]; then
+          oc apply -f infra/k8s/$svc/hpa.yaml
+        fi
+        oc set image deployment/$svc $svc=$DOCKER_REGISTRY/$DOCKER_USER/$svc:$CI_COMMIT_SHORT_SHA
+      done < changed_services.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^release\/.*$/'

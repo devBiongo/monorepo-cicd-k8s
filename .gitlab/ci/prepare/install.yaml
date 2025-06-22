@@ -1,0 +1,9 @@
+install:
+  stage: prepare
+  image: $NODE_IMAGE
+  script:
+    - pnpm install
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 hour
